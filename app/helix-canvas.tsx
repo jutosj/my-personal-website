@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const GOLD = [216, 190, 138] as const;
+const GOLD = [150, 200, 70] as const;
 const LEAF = [95, 163, 126] as const;
 const rgba = (c: readonly number[], a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 

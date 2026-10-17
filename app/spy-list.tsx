@@ -34,7 +34,7 @@ export function SpyList({ items }: { items: readonly SpyItem[] }) {
               {String(active + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
             </p>
             <p className="mt-5 font-display text-heading font-semibold text-deep">{it.title}</p>
-            <p className="mt-1 text-subheading text-gold">{it.th}</p>
+            <p className="mt-1 text-subheading text-leaf-ink">{it.th}</p>
             <p className="mt-5 text-body text-muted">{it.body}</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function SpyList({ items }: { items: readonly SpyItem[] }) {
             </button>
             <div className={`spy-detail md:hidden ${k === active ? "open" : ""}`}>
               <div>
-                <p className="text-small font-medium text-gold">{x.th}</p>
+                <p className="text-small font-medium text-leaf-ink">{x.th}</p>
                 <p className="pb-5 pt-1 text-small text-muted">{x.body}</p>
               </div>
             </div>

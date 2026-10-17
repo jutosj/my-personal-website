@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Thai, Noto_Serif_Thai } from "next/font/google";
+import { Charm, IBM_Plex_Sans_Thai, Noto_Serif_Thai } from "next/font/google";
 import { HeaderScroll, RevealObserver, ScrollProgress } from "./motion-client";
 import { SITE } from "./site-config";
 import "./globals.css";
@@ -15,6 +15,13 @@ const serifTh = Noto_Serif_Thai({
   variable: "--font-serif-th",
   subsets: ["thai", "latin"],
   weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const charm = Charm({
+  variable: "--font-charm",
+  subsets: ["thai", "latin"],
+  weight: ["700"],
   display: "swap",
 });
 
@@ -42,7 +49,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="th" className={`${plex.variable} ${serifTh.variable} h-full antialiased`}>
+    <html lang="th" className={`${plex.variable} ${serifTh.variable} ${charm.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <ScrollProgress />
         <RevealObserver />

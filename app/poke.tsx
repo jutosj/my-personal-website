@@ -27,7 +27,7 @@ export function PokeBubble({ className }: { className?: string }) {
   return (
     <p
       role="status"
-      className={`poke rounded-2xl bg-gold-soft px-4 py-3 text-small font-semibold text-deep shadow-lg ${show ? "show" : ""} ${className ?? ""}`}
+      className={`poke rounded-2xl bg-fresh px-4 py-3 text-small font-semibold text-deep shadow-lg ${show ? "show" : ""} ${className ?? ""}`}
     >
       {n >= 0 ? LINES[n % LINES.length] : ""}
     </p>

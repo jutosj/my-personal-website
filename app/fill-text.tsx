@@ -40,8 +40,8 @@ export function FillText({ text, className }: { text: string; className?: string
   return (
     <p ref={ref} className={className}>
       {words.map((w, k) => (
-        <span key={k} className="fill-word">
-          {w}
+        <span key={k} className={w.startsWith("*") ? "fill-word accent" : "fill-word"}>
+          {w.replace(/^\*/, "")}
           {k < words.length - 1 ? " " : ""}
         </span>
       ))}
