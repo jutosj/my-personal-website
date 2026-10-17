@@ -131,3 +131,26 @@ export const ChevronDownIcon = ({ className }: IconProps) => (
     <path d="m6 9 6 6 6-6" />
   </Svg>
 );
+
+export const MailIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+  </Svg>
+);
+
+export const InstagramIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <path d="M17.5 6.5h.01" />
+  </Svg>
+);
+
+export const ExternalIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M15 3h6v6" />
+    <path d="M10 14 21 3" />
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+  </Svg>
+);

@@ -14,6 +14,8 @@
   --gold: #7f6126; /* ทองเข้ม: ตัวอักษรบนพื้นสว่าง */
   --gold-soft: #d8be8a; /* ทองอ่อน: ตัวอักษรบนพื้นเข้ม */
   --gold-line: #b08d57; /* ทองเส้นตกแต่ง */
+  --leaf: #5fa37e; /* เขียวใบอ่อน (มาสคอต) */
+  --leaf-2: #7dbe97;
 }
 
 @theme inline {
@@ -264,4 +266,108 @@ details[open] > p {
   .logo-draw .logo-rung { animation: none !important; opacity: 1 !important; }
   .btn-gold:hover::after { animation: none !important; }
   .lift:hover, .lift:hover .lift-icon { translate: none; transform: none; }
+}
+
+/* ===================== มาสคอต + ลูกเล่นเพิ่มเติม ===================== */
+@keyframes bob { 50% { transform: translateY(-7px); } }
+@keyframes sway { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+@keyframes wave { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(16deg); } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes shadow-pulse { 50% { transform: scale(0.85); opacity: 0.3; } }
+@keyframes hop {
+  30% { transform: translateY(-26px) scaleY(1.04); }
+  60% { transform: translateY(0) scaleY(0.94); }
+  100% { transform: none; }
+}
+@keyframes tip {
+  0% { opacity: 0; transform: translateY(6px); }
+  2%, 21% { opacity: 1; transform: none; }
+  24%, 100% { opacity: 0; transform: translateY(-4px); }
+}
+@keyframes particle {
+  0% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% { transform: translate(26px, -75vh); opacity: 0; }
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@keyframes grow-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.mascot .m-bob { animation: bob 3.4s ease-in-out infinite; }
+.mascot .m-sway { transform-box: view-box; transform-origin: 100px 64px; animation: sway 3.2s ease-in-out infinite; }
+.mascot .m-wave { transform-box: view-box; transform-origin: 156px 146px; animation: wave 2s ease-in-out infinite; }
+.mascot .m-eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+.mascot .m-shadow { transform-box: fill-box; transform-origin: center; animation: shadow-pulse 3.4s ease-in-out infinite; }
+.mascot:hover .m-bob { animation: hop 0.7s cubic-bezier(0.3, 0.7, 0.4, 1); }
+
+.tip-bubble { height: 3.5rem; }
+.tip-bubble::before {
+  content: "";
+  position: absolute;
+  left: -0.4rem;
+  bottom: 0.9rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: var(--ivory);
+  transform: rotate(45deg);
+}
+.tip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  animation: tip calc(var(--n, 4) * 4s) ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 4s);
+}
+
+.particle {
+  position: absolute;
+  bottom: -12px;
+  border-radius: 9999px;
+  background: var(--gold-soft);
+  opacity: 0;
+  animation: particle linear infinite;
+}
+
+.marquee { animation: marquee 42s linear infinite; }
+.marquee-wrap:hover .marquee { animation-play-state: paused; }
+
+.shimmer {
+  background: linear-gradient(100deg, var(--gold-soft) 20%, #fff 45%, var(--gold-soft) 70%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* เส้นเวลาแนวตั้ง ลากลงมาตอนเลื่อนถึง */
+.tl-line { position: relative; }
+.tl-line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--gold-line);
+  transform-origin: top;
+}
+@media (scripting: enabled) {
+  .tl-line::before { transform: scaleY(0); }
+  .tl-line[data-in]::before { animation: grow-y 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s forwards; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot .m-bob, .mascot .m-sway, .mascot .m-wave, .mascot .m-eye, .mascot .m-shadow,
+  .mascot:hover .m-bob, .particle, .marquee, .shimmer { animation: none !important; }
+  .shimmer { color: var(--gold-soft); background: none; }
+  .particle { display: none; }
+  .tip { animation: none !important; opacity: 0; }
+  .tip:first-child { opacity: 1; }
+  .marquee { flex-wrap: wrap; width: auto !important; }
+  .marquee-dup { display: none !important; }
+  .tl-line::before { animation: none !important; transform: scaleY(1) !important; }
 }
