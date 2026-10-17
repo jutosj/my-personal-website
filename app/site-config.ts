@@ -36,7 +36,8 @@ export const CONTACT = {
   email: "info@120wellnessvilla.com",
   facebookUrl: "https://www.facebook.com/120WellnessVillaClinicofficial/",
   instagramUrl: "https://www.instagram.com/120wellnessvilla/",
-  tiktokUrl: "https://www.tiktok.com/@120wellnessvilla",
+  tiktokUrl: "https://www.tiktok.com/@drjutos.longevity",
+  tiktokHandle: "@drjutos.longevity",
   lineId: "", // ยังไม่มีข้อมูล: ใส่ LINE ID (เช่น "@xxxx") แล้วช่อง LINE จะโผล่ในหน้าเว็บเอง
 } as const;
 

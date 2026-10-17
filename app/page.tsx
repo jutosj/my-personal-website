@@ -1,13 +1,10 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
-import Image from "next/image";
 import type { CSSProperties } from "react";
+import { FillText } from "./fill-text";
+import { HelixCanvas } from "./helix-canvas";
 import {
-  ActivityIcon,
   ArrowRightIcon,
   BookIcon,
   ChevronDownIcon,
-  DropletIcon,
   ExternalIcon,
   FacebookIcon,
   FileTextIcon,
@@ -17,14 +14,13 @@ import {
   MessageIcon,
   PhoneIcon,
   ShieldCheckIcon,
-  SproutIcon,
+  TikTokIcon,
 } from "./icons";
 import { Mascot, TipBubble } from "./mascot";
 import { d } from "./motion";
+import { PokeBubble } from "./poke";
+import { SpyList } from "./spy-list";
 import { CLINIC, CONTACT, SITE, lineUrl, mailUrl, telUrl } from "./site-config";
-
-// วางไฟล์ภาพถ่ายที่ public/portrait.jpg แล้วหน้าแรกจะใช้ภาพจริงแทนโลโก้โดยอัตโนมัติ
-const HAS_PORTRAIT = existsSync(path.join(process.cwd(), "public", "portrait.jpg"));
 
 const TRUST = ["Board Certified ABAARM", "แพทยศาสตรบัณฑิต จุฬาฯ", "MBA Michigan Ross"] as const;
 
@@ -32,35 +28,22 @@ const MASCOT_TIPS = [
   "ดื่มน้ำสักแก้วหรือยังครับ?",
   "ลุกขึ้นยืดเส้นยืดสายกันหน่อย",
   "คืนนี้นอนให้พอนะครับ",
-  "สุขภาพดีเริ่มจากเรื่องเล็ก ๆ",
+  "ลองกดเกลียวข้างบนดูสิ 👀",
 ] as const;
 
 const CONTACT_TIPS = ["ทักมาได้เลยนะครับ", "นัดล่วงหน้าสะดวกที่สุด", "ยินดีให้ข้อมูลครับ", "แล้วเจอกันนะครับ"] as const;
 
-const MARQUEE = [
-  "Anti-Aging & Regenerative Medicine",
-  "Preventive Medicine",
-  "Lifestyle Medicine",
-  "Hormonal Therapy",
-  "Chelation",
-  "PRP",
-  "Exosome & Cell Therapy",
-  "Personalized Genetic Analysis",
-  "Urine Organic Profile",
-  "Comprehensive Stool Testing",
+const TICKER = [
+  "Board Certified ABAARM",
+  "M.D. Chulalongkorn University",
+  "MBA University of Michigan – Ross",
+  "Preventive & Lifestyle Medicine",
+  CLINIC.name,
+  `TikTok ${CONTACT.tiktokHandle}`,
 ] as const;
 
-// ฟองแสงทองลอยขึ้นในส่วนหัว (ตำแหน่ง/ขนาด/ความเร็วต่างกัน)
-const PARTICLES = [
-  { x: 8, s: 5, t: 15, dl: 0 },
-  { x: 19, s: 3, t: 19, dl: 6 },
-  { x: 31, s: 6, t: 17, dl: 3 },
-  { x: 44, s: 4, t: 21, dl: 9 },
-  { x: 57, s: 3, t: 16, dl: 12 },
-  { x: 68, s: 5, t: 20, dl: 2 },
-  { x: 79, s: 4, t: 18, dl: 8 },
-  { x: 90, s: 6, t: 22, dl: 5 },
-] as const;
+const STATEMENT =
+  "ผมเชื่อว่า ชีวิตที่ยืนยาว และมีคุณภาพ ไม่ได้เริ่มที่การรักษา แต่เริ่มจาก การป้องกัน การเข้าใจร่างกาย ของตัวเอง และการตัดสินใจ บนหลักฐาน ที่ดีที่สุดในวันนี้";
 
 const PRINCIPLES = [
   {
@@ -80,6 +63,19 @@ const PRINCIPLES = [
   },
 ] as const;
 
+const SPECIALTIES = [
+  { title: "Anti-Aging & Regenerative Medicine", th: "เวชศาสตร์ชะลอวัยและฟื้นฟู", body: "ดูแลสุขภาพเชิงรุก เพื่อคุณภาพชีวิตที่ดีในระยะยาว" },
+  { title: "Preventive Medicine", th: "เวชศาสตร์ป้องกัน", body: "ค้นหาความเสี่ยงตั้งแต่เนิ่น ๆ และวางแผนป้องกันก่อนเกิดโรค" },
+  { title: "Lifestyle Medicine", th: "เวชศาสตร์วิถีชีวิต", body: "ใช้โภชนาการ การออกกำลังกาย การนอน และการจัดการความเครียดเป็นรากฐานของสุขภาพ" },
+  { title: "Hormonal Therapy", th: "การดูแลสมดุลฮอร์โมน", body: "ประเมินและดูแลฮอร์โมนตามวัยและสภาวะของแต่ละคน ภายใต้การดูแลของแพทย์" },
+  { title: "Chelation Therapy", th: "คีเลชันบำบัด", body: "การบำบัดด้วยสารคีเลชันตามข้อบ่งชี้ ภายใต้การดูแลของแพทย์" },
+  { title: "PRP", th: "พลาสมาเกล็ดเลือดเข้มข้น", body: "การใช้พลาสมาเกล็ดเลือดเข้มข้นที่เตรียมจากเลือดของผู้รับการรักษาเอง" },
+  { title: "Exosome & Cell Therapy", th: "เอ็กโซโซมและเซลล์บำบัด", body: "ศาสตร์ใหม่ด้านเวชศาสตร์ฟื้นฟู ที่ยังมีการศึกษาวิจัยอย่างต่อเนื่อง" },
+  { title: "Personalized Genetic Analysis", th: "การวิเคราะห์พันธุกรรมเฉพาะบุคคล", body: "ใช้ข้อมูลพันธุกรรมประกอบการวางแผนดูแลสุขภาพเฉพาะบุคคล" },
+  { title: "Urine Organic Profile", th: "การตรวจสารอินทรีย์ในปัสสาวะ", body: "ตรวจสารเมตาบอไลต์ในปัสสาวะ เพื่อดูภาพรวมการทำงานของร่างกาย" },
+  { title: "Comprehensive Stool Testing", th: "การตรวจอุจจาระแบบละเอียด", body: "ตรวจอุจจาระอย่างละเอียด เพื่อประเมินสุขภาพของลำไส้" },
+] as const;
+
 const EDUCATION = [
   { year: "2023", title: "Board Certified, ABAARM", place: "American Board of Anti-Aging and Regenerative Medicine, Chicago" },
   { year: "2023", title: "Certificate in Chelation Therapy", place: "Thai Chelation Medical Association" },
@@ -95,30 +91,6 @@ const EXTRA = [
   "International Symposium in Practical Cell & Exosome Therapy",
   "อบรม Urine Organic Profile และ Comprehensive Stool Testing",
   "อบรม Botulinum Toxin, Thread Lifting และ Dermal Fillers",
-] as const;
-
-const AREAS = [
-  {
-    icon: ActivityIcon,
-    en: "Longevity",
-    th: "สุขภาพยืนยาว",
-    body: "หลักการดูแลสุขภาพระยะยาว ตั้งแต่พื้นฐานชีวิตประจำวันไปจนถึงการตรวจเชิงป้องกัน",
-    points: ["เวชศาสตร์ป้องกันและเวชศาสตร์วิถีชีวิต", "โภชนาการ ออกกำลังกาย การนอน ความเครียด", "การตรวจสุขภาพเชิงลึกและการวิเคราะห์พันธุกรรม"],
-  },
-  {
-    icon: DropletIcon,
-    en: "Hormone",
-    th: "ฮอร์โมนและวัย",
-    body: "ทำความเข้าใจฮอร์โมนที่เปลี่ยนไปตามวัย อ่านผลตรวจอย่างเข้าใจ และรู้ข้อควรระวังก่อนตัดสินใจ",
-    points: ["Hormonal therapy", "การอ่านผลเลือดเบื้องต้น", "ข้อควรระวังและข้อจำกัด"],
-  },
-  {
-    icon: SproutIcon,
-    en: "Regenerative",
-    th: "เวชศาสตร์ฟื้นฟู",
-    body: "แยกให้ออกระหว่างสิ่งที่งานวิจัยยืนยันแล้ว กับสิ่งที่ยังต้องรอหลักฐานเพิ่มเติม",
-    points: ["PRP, Exosome และ Cell therapy", "Chelation therapy", "เลือกรับข้อมูลอย่างมีวิจารณญาณ"],
-  },
 ] as const;
 
 const FORMATS = [
@@ -148,32 +120,45 @@ const FAQS = [
 
 const NAV = [
   { href: "#approach", label: "แนวคิด" },
+  { href: "#topics", label: "ความเชี่ยวชาญ" },
   { href: "#about", label: "ประวัติ" },
-  { href: "#topics", label: "ศาสตร์ที่สนใจ" },
   { href: "#clinic", label: "คลินิก" },
   { href: "#contact", label: "ติดต่อ" },
 ] as const;
 
 const CONTACT_ITEMS = [
+  { icon: TikTokIcon, label: "TikTok", value: CONTACT.tiktokHandle, href: CONTACT.tiktokUrl, external: true },
   { icon: PhoneIcon, label: "โทร", value: CONTACT.phone, href: telUrl, external: false },
   { icon: MailIcon, label: "อีเมล", value: CONTACT.email, href: mailUrl, external: false },
-  { icon: FacebookIcon, label: "Facebook", value: "120 Wellness Villa Clinic", href: CONTACT.facebookUrl, external: true },
+  { icon: FacebookIcon, label: "Facebook", value: CLINIC.name, href: CONTACT.facebookUrl, external: true },
   { icon: InstagramIcon, label: "Instagram", value: "@120wellnessvilla", href: CONTACT.instagramUrl, external: true },
-  ...(lineUrl
-    ? [{ icon: MessageIcon, label: "LINE", value: CONTACT.lineId, href: lineUrl, external: true }]
-    : []),
+  ...(lineUrl ? [{ icon: MessageIcon, label: "LINE", value: CONTACT.lineId, href: lineUrl, external: true }] : []),
 ];
+
+const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-20 border-b border-line bg-ivory/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
-          <a href="#top" className="focus-ring flex items-center gap-3 rounded-lg">
-            <LogoMark animate className="h-10 w-10 shrink-0 text-deep" />
+      {/* Intro: ตัวอักษรประกอบขึ้น แล้วม่านเลื่อนขึ้น */}
+      <div aria-hidden="true" className="intro">
+        <LogoMark className="intro-mark h-14 w-14 text-deep md:h-20 md:w-20" />
+        <span className="text-hero font-bold tracking-tight text-deep">
+          {"DR.JUTOS".split("").map((c, i) => (
+            <span key={i} className="intro-letter" style={{ "--i": i } as CSSProperties}>
+              {c}
+            </span>
+          ))}
+        </span>
+      </div>
+
+      <header id="site-header" className="site-header sticky top-0 z-30 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
+          <a href="#top" className="focus-ring flex items-center gap-3 rounded-lg text-[color:var(--hfg)]">
+            <LogoMark animate className="h-10 w-10 shrink-0" />
             <span className="leading-tight">
-              <span className="block font-display text-subheading font-semibold text-deep">{SITE.name}</span>
-              <span className="hidden text-label font-medium uppercase tracking-[0.14em] text-muted sm:block">
+              <span className="block font-display text-subheading font-semibold">{SITE.name}</span>
+              <span className="hidden text-label font-medium uppercase tracking-[0.14em] text-[color:var(--hmuted)] sm:block">
                 {SITE.descriptor}
               </span>
             </span>
@@ -183,12 +168,12 @@ export default function Home() {
               <a
                 key={href}
                 href={href}
-                className="focus-ring hidden rounded-md px-2 py-1 text-small text-muted hover:text-deep xl:inline"
+                className="focus-ring hidden rounded-md px-2 py-1 text-small text-[color:var(--hmuted)] transition-colors hover:text-[color:var(--hfg)] xl:inline"
               >
                 {label}
               </a>
             ))}
-            <a href={SITE.ctaUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm focus-ring">
+            <a href={SITE.ctaUrl} {...ext} className="btn btn-gold btn-sm focus-ring">
               {SITE.cta}
             </a>
           </nav>
@@ -196,217 +181,154 @@ export default function Home() {
       </header>
 
       <main id="top" className="flex-1">
-        {/* ส่วนหัว */}
-        <section className="relative overflow-hidden bg-deep text-ivory">
-          <div
-            aria-hidden="true"
-            className="ring-drift pointer-events-none absolute -right-48 -top-48 h-[36rem] w-[36rem] rounded-full border border-gold-soft/15"
-          />
-          <div
-            aria-hidden="true"
-            className="ring-drift pointer-events-none absolute -right-28 -top-28 h-[26rem] w-[26rem] rounded-full border border-gold-soft/20 [animation-delay:-8s]"
-          />
-          <div
-            aria-hidden="true"
-            className="glow pointer-events-none absolute -left-32 bottom-[-10rem] h-[32rem] w-[32rem] rounded-full"
-          />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            {PARTICLES.map((p) => (
-              <span
-                key={p.x}
-                className="particle"
-                style={
-                  {
-                    left: `${p.x}%`,
-                    width: p.s,
-                    height: p.s,
-                    animationDuration: `${p.t}s`,
-                    animationDelay: `-${p.dl}s`,
-                  } as CSSProperties
-                }
-              />
-            ))}
-          </div>
+        {/* ส่วนหัว: ตัวอักษรยักษ์ + เกลียว DNA ที่กดเล่นได้ */}
+        <section className="relative overflow-hidden">
+          <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-10 md:pb-24 md:pt-16">
+            <p className="eyebrow hero-in" style={d(0)}>
+              {SITE.eyebrow}
+            </p>
+            <h1 className="hero-in relative mt-6 max-w-5xl text-balance text-hero font-bold tracking-tight text-deep" style={d(120)}>
+              สุขภาพยืนยาว, เริ่มจากความเข้าใจ<span className="text-gold">ที่ถูกต้อง.</span>
+            </h1>
 
-          <div className="relative mx-auto grid max-w-6xl gap-14 px-5 pb-24 pt-14 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-12 md:pb-32 md:pt-24">
-            <div>
-              <p className="eyebrow-light hero-in" style={d(100)}>
-                {SITE.eyebrow}
-              </p>
-              <h1 className="hero-in mt-5 text-balance font-display text-display font-semibold" style={d(250)}>
-                {SITE.headline}
-              </h1>
-              <p className="hero-in mt-6 max-w-xl text-subheading text-ivory/85" style={d(450)}>
-                สวัสดีครับ ผม<span className="shimmer font-semibold">{SITE.name}</span> ({SITE.fullName}) แพทย์ด้านเวชศาสตร์ชะลอวัยและเวชศาสตร์ฟื้นฟู
-                ประจำ {CLINIC.name} ผมเขียนและแบ่งปันความรู้ให้เข้าใจง่าย อิงหลักฐาน และบอกข้อจำกัดอย่างตรงไปตรงมา
-              </p>
-              <div className="hero-in mt-9 flex flex-wrap gap-3" style={d(650)}>
-                <a href={SITE.ctaUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold focus-ring-light">
-                  <MessageIcon className="h-5 w-5" />
-                  {SITE.cta}
-                </a>
-                <a href="#about" className="btn btn-outline-light group focus-ring-light">
-                  ประวัติและวุฒิบัตร
-                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5" />
-                </a>
-              </div>
-              <ul className="hero-in mt-10 flex flex-wrap gap-x-7 gap-y-3 text-small text-ivory/85" style={d(850)}>
-                {TRUST.map((t) => (
-                  <li key={t} className="flex items-center gap-2">
-                    <ShieldCheckIcon className="h-5 w-5 text-gold-soft" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
+            <div
+              className="hero-in relative z-10 mx-auto mt-6 aspect-square w-72 sm:w-96 md:absolute md:right-0 md:top-0 md:mt-0 md:w-[min(46vw,580px)]"
+              style={d(350)}
+            >
+              <HelixCanvas className="helix absolute inset-0 h-full w-full" />
+              <span className="pointer-events-none absolute bottom-[16%] right-[10%] -rotate-[28deg] text-label font-semibold uppercase tracking-[0.16em] text-deep/70">
+                อย่ากดเกลียวนี้นะ
+              </span>
+              <PokeBubble className="absolute left-[8%] top-[14%]" />
             </div>
 
-            <div className="hero-in relative mx-auto w-full max-w-sm md:max-w-none" style={d(400)}>
-              <div className="hero-float relative aspect-[4/5] overflow-hidden rounded-t-full rounded-b-3xl border border-gold-soft/30 bg-deep-2">
-                {HAS_PORTRAIT ? (
-                  <Image
-                    src="/portrait.jpg"
-                    alt={`ภาพถ่ายของ${SITE.name}`}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 28rem, 90vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div aria-hidden="true" className="relative flex h-full flex-col items-center justify-start gap-5 pt-[16%]">
-                    <span className="pulse-ring absolute left-1/2 top-[27%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-soft/50" />
-                    <span
-                      className="pulse-ring absolute left-1/2 top-[27%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-soft/50"
-                      style={d(2750)}
-                    />
-                    <LogoMark animate className="relative h-32 w-32 text-ivory" />
-                    <p className="eyebrow-light text-center">{SITE.descriptor}</p>
-                  </div>
-                )}
+            <div className="relative z-10 mt-10 grid gap-10 md:mt-16 md:grid-cols-[minmax(0,36rem)_1fr] md:items-end">
+              <div className="hero-in" style={d(300)}>
+                <p className="text-subheading text-muted">
+                  สวัสดีครับ ผม<span className="shimmer-dark font-semibold">{SITE.name}</span> ({SITE.fullName}) แพทย์ด้านเวชศาสตร์ชะลอวัยและเวชศาสตร์ฟื้นฟู
+                  ประจำ {CLINIC.name} ผมแบ่งปันความรู้ให้เข้าใจง่าย อิงหลักฐาน และบอกข้อจำกัดอย่างตรงไปตรงมา
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a href={SITE.ctaUrl} {...ext} className="btn btn-primary focus-ring">
+                    {SITE.cta}
+                    <ArrowRightIcon className="h-5 w-5" />
+                  </a>
+                  <a href={CONTACT.tiktokUrl} {...ext} className="btn btn-outline group focus-ring">
+                    <TikTokIcon className="h-5 w-5" />
+                    ดูคลิปบน TikTok
+                  </a>
+                </div>
+                <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-small text-muted">
+                  {TRUST.map((t) => (
+                    <li key={t} className="flex items-center gap-2">
+                      <ShieldCheckIcon className="h-5 w-5 text-gold" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* น้องเกลียว มาสคอต */}
-              <Mascot className="absolute -bottom-7 -left-3 w-40 cursor-pointer drop-shadow-xl md:-left-14 md:w-52" />
-              <TipBubble
-                tips={MASCOT_TIPS}
-                className="absolute bottom-[5.5rem] left-[8.5rem] w-44 md:bottom-[7rem] md:left-[9.5rem] md:w-52"
-              />
+              <div className="hero-in relative hidden h-56 md:block" style={d(600)}>
+                <Mascot className="absolute bottom-0 left-[8%] w-40 cursor-pointer" />
+                <TipBubble dark tips={MASCOT_TIPS} className="absolute bottom-28 left-[calc(8%+11rem)] w-52" />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ริบบิ้นความเชี่ยวชาญ */}
-        <section aria-label="ความเชี่ยวชาญ" className="marquee-wrap overflow-hidden border-b border-line bg-ivory py-5">
+        {/* แถบข้อความวิ่ง */}
+        <section aria-label="จุดเด่น" className="marquee-wrap overflow-hidden bg-deep py-4">
           <div className="marquee flex w-max">
             {[0, 1].map((g) => (
-              <ul
-                key={g}
-                aria-hidden={g === 1}
-                className={`flex shrink-0 items-center ${g === 1 ? "marquee-dup" : ""}`}
-              >
-                {MARQUEE.map((m) => (
-                  <li key={m} className="flex items-center font-display text-subheading text-deep/85">
-                    <span className="px-6">{m}</span>
-                    <span aria-hidden="true" className="h-2 w-2 rotate-45 bg-gold-line" />
+              <ul key={g} aria-hidden={g === 1} className={`flex shrink-0 items-center ${g === 1 ? "marquee-dup" : ""}`}>
+                {TICKER.map((m) => (
+                  <li key={m} className="flex items-center text-small font-semibold uppercase tracking-[0.16em] text-gold-soft">
+                    <span className="px-7">{m}</span>
+                    <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-gold-soft" />
                   </li>
                 ))}
               </ul>
             ))}
           </div>
+        </section>
+
+        {/* ข้อความความเชื่อ เติมสีตามการเลื่อน */}
+        <section className="mx-auto max-w-6xl px-5 py-24 md:py-36">
+          <p className="eyebrow reveal">Belief</p>
+          <FillText text={STATEMENT} className="mt-6 font-display text-statement font-semibold" />
         </section>
 
         {/* แนวคิดการทำงาน */}
-        <section id="approach" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-          <p className="eyebrow reveal">Approach</p>
-          <h2 className="section-title reveal mt-3" style={d(80)}>
-            แนวคิดการทำงานของผม
-          </h2>
-          <p className="reveal mt-4 max-w-2xl text-body text-muted" style={d(160)}>
-            สามข้อที่ผมยึดไว้ทุกครั้งที่เขียนหรือแบ่งปันความรู้
-          </p>
-          <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
-            {PRINCIPLES.map(({ no, title, body }, i) => (
-              <li key={no} className="reveal line-grow border-t border-gold-line pt-6" style={d(i * 140)}>
-                <span className="font-display text-heading font-semibold text-gold">{no}</span>
-                <h3 className="mt-2 font-display text-subheading font-semibold text-deep">{title}</h3>
-                <p className="mt-2 text-body text-muted">{body}</p>
-              </li>
-            ))}
-          </ol>
+        <section id="approach" className="border-t border-line">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+            <p className="eyebrow reveal">Approach</p>
+            <h2 className="section-title reveal mt-3" style={d(80)}>
+              แนวคิดการทำงานของผม
+            </h2>
+            <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+              {PRINCIPLES.map(({ no, title, body }, i) => (
+                <li key={no} className="reveal line-grow border-t border-gold-line pt-6" style={d(i * 140)}>
+                  <span className="font-display text-heading font-semibold text-gold">{no}</span>
+                  <h3 className="mt-2 font-display text-subheading font-semibold text-deep">{title}</h3>
+                  <p className="mt-2 text-body text-muted">{body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
-        {/* ประวัติและวุฒิบัตร */}
-        <section id="about" className="bg-mist py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-5">
-            <p className="eyebrow reveal">About</p>
+        {/* ความเชี่ยวชาญ: รายการเข้มขึ้นตามการเลื่อน */}
+        <section id="topics" className="bg-mist">
+          <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+            <p className="eyebrow reveal">Specializations</p>
             <h2 className="section-title reveal mt-3" style={d(80)}>
-              {SITE.fullName}
+              ความเชี่ยวชาญ
             </h2>
-            <p className="reveal mt-2 text-subheading text-muted" style={d(140)}>
-              {SITE.credentials}
-            </p>
-
-            <div className="mt-12 grid gap-12 md:grid-cols-[1.3fr_1fr] md:gap-16">
-              <div>
-                <h3 className="reveal font-display text-subheading font-semibold text-deep">การศึกษาและวุฒิบัตร</h3>
-                <ol className="tl-line reveal mt-6 space-y-8">
-                  {EDUCATION.map(({ year, title, place }) => (
-                    <li key={title} className="relative pl-8">
-                      <span
-                        aria-hidden="true"
-                        className="absolute -left-[5px] top-2.5 h-2.5 w-2.5 rounded-full bg-gold-line ring-4 ring-mist"
-                      />
-                      <p className="eyebrow">{year}</p>
-                      <p className="mt-1 font-semibold text-deep">{title}</p>
-                      <p className="text-small text-muted">{place}</p>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              <div className="reveal card h-fit self-start" style={d(150)}>
-                <h3 className="font-display text-subheading font-semibold text-deep">การอบรมและสมาชิก</h3>
-                <ul className="mt-5 space-y-3 text-small text-ink">
-                  {EXTRA.map((e) => (
-                    <li key={e} className="flex gap-3">
-                      <ShieldCheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
-                      {e}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 border-t border-line pt-4 text-label text-muted">
-                  ข้อมูลจากเว็บไซต์ทางการของ {CLINIC.name}
-                </p>
-              </div>
+            <div className="mt-12">
+              <SpyList items={SPECIALTIES} />
             </div>
           </div>
         </section>
 
-        {/* ศาสตร์ที่สนใจ */}
-        <section id="topics" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-          <p className="eyebrow reveal">Focus Areas</p>
+        {/* ประวัติและวุฒิบัตร */}
+        <section id="about" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
+          <p className="eyebrow reveal">About</p>
           <h2 className="section-title reveal mt-3" style={d(80)}>
-            ศาสตร์ที่ผมสนใจ
+            {SITE.fullName}
           </h2>
-          <ul className="mt-12 grid gap-6 md:grid-cols-3">
-            {AREAS.map(({ icon: Icon, en, th, body, points }, i) => (
-              <li key={en} className="card lift reveal flex flex-col" style={d(i * 140)}>
-                <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-deep text-gold-soft">
-                  <Icon />
-                </span>
-                <p className="eyebrow mt-6">{en}</p>
-                <h3 className="mt-1 font-display text-subheading font-semibold text-deep">{th}</h3>
-                <p className="mt-3 text-body text-muted">{body}</p>
-                <ul className="mt-6 space-y-2 border-t border-line pt-5 text-small text-ink">
-                  {points.map((p) => (
-                    <li key={p} className="flex gap-3">
-                      <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-line" />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+          <p className="reveal mt-2 text-subheading text-muted" style={d(140)}>
+            {SITE.credentials}
+          </p>
+          <div className="mt-12 grid gap-12 md:grid-cols-[1.3fr_1fr] md:gap-16">
+            <div>
+              <h3 className="reveal font-display text-subheading font-semibold text-deep">การศึกษาและวุฒิบัตร</h3>
+              <ol className="tl-line reveal mt-6 space-y-8">
+                {EDUCATION.map(({ year, title, place }) => (
+                  <li key={title} className="relative pl-8">
+                    <span
+                      aria-hidden="true"
+                      className="absolute -left-[5px] top-2.5 h-2.5 w-2.5 rounded-full bg-gold-line ring-4 ring-ivory"
+                    />
+                    <p className="eyebrow">{year}</p>
+                    <p className="mt-1 font-semibold text-deep">{title}</p>
+                    <p className="text-small text-muted">{place}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="reveal card h-fit self-start" style={d(150)}>
+              <h3 className="font-display text-subheading font-semibold text-deep">การอบรมและสมาชิก</h3>
+              <ul className="mt-5 space-y-3 text-small text-ink">
+                {EXTRA.map((e) => (
+                  <li key={e} className="flex gap-3">
+                    <ShieldCheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                    {e}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 border-t border-line pt-4 text-label text-muted">ข้อมูลจากเว็บไซต์ทางการของ {CLINIC.name}</p>
+            </div>
+          </div>
         </section>
 
         {/* คลินิก */}
@@ -421,11 +343,11 @@ export default function Home() {
                   ไม่ใช่แค่บรรเทาอาการ
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a href={CLINIC.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary focus-ring">
+                  <a href={CLINIC.url} {...ext} className="btn btn-primary focus-ring">
                     ไปที่เว็บคลินิก
                     <ExternalIcon className="h-5 w-5" />
                   </a>
-                  <a href={SITE.ctaUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline focus-ring">
+                  <a href={SITE.ctaUrl} {...ext} className="btn btn-outline focus-ring">
                     นัดหมาย
                   </a>
                 </div>
@@ -445,7 +367,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* เนื้อหาที่จะมีให้อ่าน */}
+        {/* บทความ + TikTok */}
         <section id="content" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <p className="eyebrow reveal">Journal</p>
           <h2 className="section-title reveal mt-3" style={d(80)}>
@@ -461,15 +383,32 @@ export default function Home() {
                   <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-mist text-deep">
                     <Icon />
                   </span>
-                  <span className="rounded-full border border-gold-line px-3 py-1 text-label font-medium text-gold">
-                    เร็ว ๆ นี้
-                  </span>
+                  <span className="rounded-full border border-gold-line px-3 py-1 text-label font-medium text-gold">เร็ว ๆ นี้</span>
                 </div>
                 <h3 className="mt-5 font-display text-subheading font-semibold text-deep">{title}</h3>
                 <p className="mt-2 text-body text-muted">{body}</p>
               </li>
             ))}
           </ul>
+          <a
+            href={CONTACT.tiktokUrl}
+            {...ext}
+            className="lift reveal focus-ring mt-6 flex flex-col items-start justify-between gap-6 rounded-3xl bg-deep p-8 text-ivory md:flex-row md:items-center md:p-10"
+          >
+            <span className="flex items-center gap-5">
+              <span className="lift-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-soft text-deep">
+                <TikTokIcon className="h-7 w-7" />
+              </span>
+              <span>
+                <span className="block font-display text-subheading font-semibold">ระหว่างรอบทความ ดูคลิปสั้นของผมได้ที่ TikTok</span>
+                <span className="text-small text-ivory/80">{CONTACT.tiktokHandle}</span>
+              </span>
+            </span>
+            <span className="btn btn-gold shrink-0">
+              ติดตามบน TikTok
+              <ArrowRightIcon className="h-5 w-5" />
+            </span>
+          </a>
         </section>
 
         {/* คำถามที่พบบ่อย */}
@@ -479,14 +418,16 @@ export default function Home() {
             <h2 className="section-title reveal mt-3" style={d(80)}>
               คำถามที่พบบ่อย
             </h2>
-            <div className="reveal mt-10 divide-y divide-line rounded-3xl border border-line bg-paper" style={d(160)}>
+            <div className="reveal mt-10 divide-y divide-line border-y border-line" style={d(160)}>
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group">
-                  <summary className="focus-ring flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-3xl px-6 py-4 text-body font-semibold text-deep [&::-webkit-details-marker]:hidden">
+                  <summary className="focus-ring flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-5 text-subheading font-medium text-deep [&::-webkit-details-marker]:hidden">
                     {q}
-                    <ChevronDownIcon className="h-5 w-5 shrink-0 text-muted transition-transform group-open:rotate-180" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line transition-colors group-open:bg-deep group-open:text-ivory">
+                      <ChevronDownIcon className="h-4 w-4 transition-transform group-open:rotate-180" />
+                    </span>
                   </summary>
-                  <p className="px-6 pb-5 text-body text-muted">{a}</p>
+                  <p className="pb-6 pr-12 text-body text-muted">{a}</p>
                 </details>
               ))}
             </div>
@@ -498,14 +439,10 @@ export default function Home() {
           <div className="mx-auto grid max-w-6xl gap-12 px-5 md:grid-cols-[1fr_1.1fr] md:items-center">
             <div className="reveal">
               <p className="eyebrow-light">Contact</p>
-              <h2 className="mt-3 text-balance font-display text-heading font-semibold">
-                ติดต่อสอบถามหรือนัดหมาย
-              </h2>
-              <p className="mt-4 text-body text-ivory/85">
-                นัดล่วงหน้าผ่านหน้านัดหมายของคลินิก หรือโทรสอบถามได้เลยครับ
-              </p>
+              <h2 className="mt-3 text-balance font-display text-heading font-semibold">ติดต่อสอบถามหรือนัดหมาย</h2>
+              <p className="mt-4 text-body text-ivory/85">นัดล่วงหน้าผ่านหน้านัดหมายของคลินิก หรือโทรสอบถามได้เลยครับ</p>
               <div className="mt-8">
-                <a href={SITE.ctaUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold focus-ring-light">
+                <a href={SITE.ctaUrl} {...ext} className="btn btn-gold focus-ring-light">
                   <MessageIcon className="h-5 w-5" />
                   {SITE.cta}
                 </a>
@@ -520,8 +457,8 @@ export default function Home() {
                 <a
                   key={label}
                   href={href}
-                  style={d(100 + i * 120)}
-                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  style={d(100 + i * 110)}
+                  {...(external ? ext : {})}
                   className="focus-ring-light lift reveal flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 hover:border-gold-soft"
                 >
                   <Icon className="h-7 w-7 shrink-0 text-gold-soft" />
@@ -549,6 +486,16 @@ export default function Home() {
           <p className="mt-4 text-small">© {SITE.fullName} สงวนลิขสิทธิ์</p>
         </div>
       </footer>
+
+      {/* ปุ่มลอยมุมขวาล่าง */}
+      <a
+        href={SITE.ctaUrl}
+        {...ext}
+        className="float-cta btn btn-primary focus-ring fixed bottom-5 right-5 z-40 shadow-xl"
+      >
+        นัดปรึกษา?
+        <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-gold-soft" />
+      </a>
     </>
   );
 }

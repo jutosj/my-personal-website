@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Noto_Serif_Thai } from "next/font/google";
-import { RevealObserver, ScrollProgress } from "./motion-client";
+import { HeaderScroll, RevealObserver, ScrollProgress } from "./motion-client";
 import { SITE } from "./site-config";
 import "./globals.css";
 
@@ -46,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ScrollProgress />
         <RevealObserver />
+        <HeaderScroll />
         {children}
       </body>
     </html>

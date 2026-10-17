@@ -23,6 +23,19 @@ export function RevealObserver() {
   return null;
 }
 
+/** ใส่ data-scrolled ให้เมนูด้านบนเมื่อเลื่อนลงมา (เมนูจะเปลี่ยนเป็นแถบสีเข้ม) */
+export function HeaderScroll() {
+  useEffect(() => {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+    const update = () => header.toggleAttribute("data-scrolled", window.scrollY > 40);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+  return null;
+}
+
 /** เส้นทองบางด้านบนสุด แสดงว่าอ่านมาถึงไหนแล้ว */
 export function ScrollProgress() {
   const bar = useRef<HTMLDivElement>(null);

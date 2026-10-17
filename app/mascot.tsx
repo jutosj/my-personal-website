@@ -62,9 +62,17 @@ export function Mascot({ className }: { className?: string }) {
 }
 
 /** กล่องคำพูด: เกร็ดสุขภาพทั่วไปสลับกันทีละข้อ (CSS ล้วน ไม่ใช้ JavaScript) */
-export function TipBubble({ tips, className }: { tips: readonly string[]; className?: string }) {
+export function TipBubble({
+  tips,
+  className,
+  dark,
+}: {
+  tips: readonly string[];
+  className?: string;
+  dark?: boolean;
+}) {
   return (
-    <div aria-hidden="true" className={`tip-bubble relative rounded-2xl bg-ivory px-4 text-small font-medium text-deep shadow-lg ${className ?? ""}`}>
+    <div aria-hidden="true" className={`tip-bubble relative rounded-2xl text-small font-medium shadow-lg ${dark ? "bg-deep text-ivory" : "bg-ivory text-deep"} ${className ?? ""}`}>
       {tips.map((t, i) => (
         <span
           key={t}

@@ -154,3 +154,9 @@ export const ExternalIcon = ({ className }: IconProps) => (
     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
   </Svg>
 );
+
+export const TikTokIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M9 12a4 4 0 1 0 4 4V2a5 5 0 0 0 5 5" />
+  </Svg>
+);
