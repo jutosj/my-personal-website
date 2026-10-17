@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Prompt, Sarabun } from "next/font/google";
+import { IBM_Plex_Sans_Thai, Noto_Serif_Thai } from "next/font/google";
 import { SITE } from "./site-config";
 import "./globals.css";
 
-const sarabun = Sarabun({
-  variable: "--font-sarabun",
+const plex = IBM_Plex_Sans_Thai({
+  variable: "--font-plex",
   subsets: ["thai", "latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const prompt = Prompt({
-  variable: "--font-prompt",
+const serifTh = Noto_Serif_Thai({
+  variable: "--font-serif-th",
   subsets: ["thai", "latin"],
-  weight: ["500", "600"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="th" className={`${sarabun.variable} ${prompt.variable} h-full antialiased`}>
+    <html lang="th" className={`${plex.variable} ${serifTh.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

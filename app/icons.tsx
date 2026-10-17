@@ -9,13 +9,45 @@ function Svg({ className, children }: IconProps & { children: ReactNode }) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.8"
+      strokeWidth="1.7"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
       className={className ?? "h-6 w-6"}
     >
       {children}
+    </svg>
+  );
+}
+
+/** โลโก้: วงแหวน + เกลียวคู่ (สื่อถึงการดูแลสุขภาพระดับเซลล์/ความยืนยาว) */
+export function LogoMark({ className }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 48 48"
+      fill="none"
+      aria-hidden="true"
+      className={className ?? "h-10 w-10"}
+    >
+      <circle cx="24" cy="24" r="22.25" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M17 10C17 19 31 19 31 24C31 29 17 29 17 38"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M31 10C31 19 17 19 17 24C17 29 31 29 31 38"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <g stroke="var(--gold-line)" strokeWidth="1.8" strokeLinecap="round">
+        <path d="M19.4 14.4H28.6" />
+        <path d="M17.8 24H30.2" />
+        <path d="M19.4 33.6H28.6" />
+      </g>
     </svg>
   );
 }
@@ -38,10 +70,15 @@ export const FacebookIcon = ({ className }: IconProps) => (
   </Svg>
 );
 
-export const LeafIcon = ({ className }: IconProps) => (
+export const ActivityIcon = ({ className }: IconProps) => (
   <Svg className={className}>
-    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+    <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
+  </Svg>
+);
+
+export const DropletIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
   </Svg>
 );
 
@@ -54,12 +91,10 @@ export const SproutIcon = ({ className }: IconProps) => (
   </Svg>
 );
 
-export const GridIcon = ({ className }: IconProps) => (
+export const ShieldCheckIcon = ({ className }: IconProps) => (
   <Svg className={className}>
-    <rect width="7" height="7" x="3" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="14" rx="1" />
-    <rect width="7" height="7" x="3" y="14" rx="1" />
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    <path d="m9 12 2 2 4-4" />
   </Svg>
 );
 
@@ -77,6 +112,13 @@ export const BookIcon = ({ className }: IconProps) => (
   <Svg className={className}>
     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+  </Svg>
+);
+
+export const ArrowRightIcon = ({ className }: IconProps) => (
+  <Svg className={className}>
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
   </Svg>
 );
 

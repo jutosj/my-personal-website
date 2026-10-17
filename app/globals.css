@@ -2,40 +2,50 @@
 
 /* ===== สี: แก้ที่นี่ที่เดียว แล้วทั้งเว็บเปลี่ยนตาม ===== */
 :root {
-  --cream: #fbf6ee; /* พื้นหลังหลัก */
-  --sand: #f3e9d8; /* พื้นหลังส่วนสลับ */
-  --line: #e4d8c4; /* เส้นขอบ */
-  --ink: #2a2622; /* ตัวอักษรหลัก */
-  --muted: #6b6259; /* ตัวอักษรรอง */
-  --brand: #b5472a; /* สีปุ่มหลัก (ส้มดินเผา) */
-  --brand-dark: #8f3419; /* สีปุ่มตอนชี้เมาส์ */
-  --sage: #4f6f52; /* สีเน้นรอง (เขียวเซจ) */
+  --ivory: #f7f4ee; /* พื้นหลังหลัก (ขาวนวล) */
+  --mist: #eaf0ed; /* พื้นหลังส่วนสลับ (เขียวจาง) */
+  --paper: #ffffff; /* พื้นการ์ด */
+  --line: #d9e0db; /* เส้นขอบ */
+  --ink: #14201f; /* ตัวอักษรหลัก */
+  --muted: #55655f; /* ตัวอักษรรอง */
+  --deep: #0e3b3a; /* เขียวเข้ม: สีหลักของแบรนด์ */
+  --deep-2: #154b49; /* เขียวเข้มระดับสอง */
+  --deep-3: #0a2c2b; /* เขียวเข้มสุด (ส่วนท้าย) */
+  --gold: #7f6126; /* ทองเข้ม: ตัวอักษรบนพื้นสว่าง */
+  --gold-soft: #d8be8a; /* ทองอ่อน: ตัวอักษรบนพื้นเข้ม */
+  --gold-line: #b08d57; /* ทองเส้นตกแต่ง */
 }
 
 @theme inline {
-  --color-cream: var(--cream);
-  --color-sand: var(--sand);
+  --color-ivory: var(--ivory);
+  --color-mist: var(--mist);
+  --color-paper: var(--paper);
   --color-line: var(--line);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
-  --color-brand: var(--brand);
-  --color-brand-dark: var(--brand-dark);
-  --color-sage: var(--sage);
+  --color-deep: var(--deep);
+  --color-deep-2: var(--deep-2);
+  --color-deep-3: var(--deep-3);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-line: var(--gold-line);
 
-  --font-sans: var(--font-sarabun);
-  --font-display: var(--font-prompt);
+  --font-sans: var(--font-plex);
+  --font-display: var(--font-serif-th);
 
   /* ===== ขนาดตัวอักษร: ปรับอัตโนมัติตามขนาดจอ ===== */
-  --text-display: clamp(2.25rem, 1.2rem + 4.5vw, 3.75rem);
-  --text-display--line-height: 1.2;
-  --text-heading: clamp(1.625rem, 1.2rem + 1.6vw, 2.25rem);
-  --text-heading--line-height: 1.3;
+  --text-display: clamp(2.125rem, 1.1rem + 4.2vw, 3.75rem);
+  --text-display--line-height: 1.35;
+  --text-heading: clamp(1.625rem, 1.2rem + 1.6vw, 2.375rem);
+  --text-heading--line-height: 1.4;
   --text-subheading: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
   --text-subheading--line-height: 1.6;
   --text-body: 1.0625rem;
-  --text-body--line-height: 1.75;
+  --text-body--line-height: 1.8;
   --text-small: 0.9375rem;
-  --text-small--line-height: 1.6;
+  --text-small--line-height: 1.65;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
 }
 
 html {
@@ -44,9 +54,9 @@ html {
 }
 
 body {
-  background: var(--cream);
+  background: var(--ivory);
   color: var(--ink);
-  font-family: var(--font-sarabun), sans-serif;
+  font-family: var(--font-plex), sans-serif;
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
 }
@@ -59,27 +69,43 @@ body {
 
 @layer components {
   .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-body font-semibold transition-colors;
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 py-3 text-body font-semibold transition-colors;
   }
+  /* ปุ่มบนพื้นสว่าง */
   .btn-primary {
-    @apply bg-brand text-white hover:bg-brand-dark;
+    @apply bg-deep text-ivory hover:bg-deep-2;
   }
-  .btn-ghost {
-    @apply border border-ink/25 text-ink hover:bg-sand;
+  .btn-outline {
+    @apply border border-deep/30 text-deep hover:bg-deep/5;
+  }
+  /* ปุ่มบนพื้นเขียวเข้ม */
+  .btn-gold {
+    @apply bg-gold-soft text-deep hover:bg-white;
+  }
+  .btn-outline-light {
+    @apply border border-ivory/40 text-ivory hover:bg-white/10;
   }
   .btn-sm {
-    @apply min-h-10 px-4 py-2 text-small;
+    @apply min-h-10 px-5 py-2 text-small;
   }
-  .chip {
-    @apply inline-flex items-center rounded-full bg-sand px-4 py-1.5 text-small font-medium text-sage;
+
+  .eyebrow {
+    @apply text-label font-semibold uppercase tracking-[0.18em] text-gold;
   }
-  .card {
-    @apply rounded-3xl border border-line bg-white p-6 shadow-[0_1px_0_rgba(42,38,34,0.04)];
+  .eyebrow-light {
+    @apply text-label font-semibold uppercase tracking-[0.18em] text-gold-soft;
   }
   .section-title {
-    @apply font-display text-heading font-semibold text-ink;
+    @apply font-display text-heading font-semibold text-deep;
   }
+  .card {
+    @apply rounded-3xl border border-line bg-paper p-7;
+  }
+
   .focus-ring {
-    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-deep;
+  }
+  .focus-ring-light {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-soft;
   }
 }
