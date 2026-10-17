@@ -15,6 +15,7 @@ import {
   ShieldCheckIcon,
   SproutIcon,
 } from "./icons";
+import { d } from "./motion";
 import { CONTACT, SITE, lineUrl, telUrl } from "./site-config";
 
 // วางไฟล์ภาพถ่ายที่ public/portrait.jpg แล้วหน้าแรกจะใช้ภาพจริงแทนโลโก้โดยอัตโนมัติ
@@ -114,7 +115,7 @@ export default function Home() {
       <header className="sticky top-0 z-20 border-b border-line bg-ivory/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
           <a href="#top" className="focus-ring flex items-center gap-3 rounded-lg">
-            <LogoMark className="h-10 w-10 shrink-0 text-deep" />
+            <LogoMark animate className="h-10 w-10 shrink-0 text-deep" />
             <span className="leading-tight">
               <span className="block font-display text-subheading font-semibold text-deep">{SITE.name}</span>
               <span className="hidden text-label font-medium uppercase tracking-[0.14em] text-muted sm:block">
@@ -144,31 +145,35 @@ export default function Home() {
         <section className="relative overflow-hidden bg-deep text-ivory">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-48 -top-48 h-[36rem] w-[36rem] rounded-full border border-gold-soft/15"
+            className="ring-drift pointer-events-none absolute -right-48 -top-48 h-[36rem] w-[36rem] rounded-full border border-gold-soft/15"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-28 -top-28 h-[26rem] w-[26rem] rounded-full border border-gold-soft/20"
+            className="ring-drift pointer-events-none absolute -right-28 -top-28 h-[26rem] w-[26rem] rounded-full border border-gold-soft/20 [animation-delay:-8s]"
+          />
+          <div
+            aria-hidden="true"
+            className="glow pointer-events-none absolute -left-32 bottom-[-10rem] h-[32rem] w-[32rem] rounded-full"
           />
           <div className="relative mx-auto grid max-w-6xl gap-14 px-5 pb-20 pt-14 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-12 md:pb-28 md:pt-24">
             <div>
-              <p className="eyebrow-light">{SITE.eyebrow}</p>
-              <h1 className="mt-5 text-balance font-display text-display font-semibold">{SITE.headline}</h1>
-              <p className="mt-6 max-w-xl text-subheading text-ivory/85">
+              <p className="eyebrow-light hero-in" style={d(100)}>{SITE.eyebrow}</p>
+              <h1 className="hero-in mt-5 text-balance font-display text-display font-semibold" style={d(250)}>{SITE.headline}</h1>
+              <p className="hero-in mt-6 max-w-xl text-subheading text-ivory/85" style={d(450)}>
                 สวัสดีครับ ผม<span className="font-semibold text-gold-soft">{SITE.name}</span> แพทย์ผู้สนใจด้าน Longevity
                 ฮอร์โมน และเวชศาสตร์ฟื้นฟู ผมเขียนและแบ่งปันความรู้ให้เข้าใจง่าย อิงหลักฐาน และบอกข้อจำกัดอย่างตรงไปตรงมา
               </p>
-              <div className="mt-9 flex flex-wrap gap-3">
+              <div className="hero-in mt-9 flex flex-wrap gap-3" style={d(650)}>
                 <a href={lineUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold focus-ring-light">
                   <MessageIcon className="h-5 w-5" />
                   {SITE.cta}
                 </a>
-                <a href="#approach" className="btn btn-outline-light focus-ring-light">
+                <a href="#approach" className="btn btn-outline-light group focus-ring-light">
                   แนวคิดการทำงานของผม
-                  <ArrowRightIcon className="h-5 w-5" />
+                  <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1.5" />
                 </a>
               </div>
-              <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-small text-ivory/85">
+              <ul className="hero-in mt-10 flex flex-wrap gap-x-7 gap-y-3 text-small text-ivory/85" style={d(850)}>
                 {TRUST.map((t) => (
                   <li key={t} className="flex items-center gap-2">
                     <ShieldCheckIcon className="h-5 w-5 text-gold-soft" />
@@ -178,8 +183,8 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="mx-auto w-full max-w-sm md:max-w-none">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-t-full rounded-b-3xl border border-gold-soft/30 bg-deep-2">
+            <div className="hero-in mx-auto w-full max-w-sm md:max-w-none" style={d(400)}>
+              <div className="hero-float relative aspect-[4/5] overflow-hidden rounded-t-full rounded-b-3xl border border-gold-soft/30 bg-deep-2">
                 {HAS_PORTRAIT ? (
                   <Image
                     src="/portrait.jpg"
@@ -190,8 +195,10 @@ export default function Home() {
                     className="object-cover"
                   />
                 ) : (
-                  <div aria-hidden="true" className="flex h-full flex-col items-center justify-center gap-7">
-                    <LogoMark className="h-36 w-36 text-ivory" />
+                  <div aria-hidden="true" className="relative flex h-full flex-col items-center justify-center gap-7">
+                    <span className="pulse-ring absolute left-1/2 top-[42%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-soft/50" />
+                    <span className="pulse-ring absolute left-1/2 top-[42%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-soft/50" style={d(2750)} />
+                    <LogoMark animate className="relative h-36 w-36 text-ivory" />
                     <p className="eyebrow-light text-center">{SITE.descriptor}</p>
                   </div>
                 )}
@@ -202,14 +209,14 @@ export default function Home() {
 
         {/* แนวคิดการทำงาน */}
         <section id="approach" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-          <p className="eyebrow">Approach</p>
-          <h2 className="section-title mt-3">แนวคิดการทำงานของผม</h2>
-          <p className="mt-4 max-w-2xl text-body text-muted">
+          <p className="eyebrow reveal">Approach</p>
+          <h2 className="section-title reveal mt-3" style={d(80)}>แนวคิดการทำงานของผม</h2>
+          <p className="reveal mt-4 max-w-2xl text-body text-muted" style={d(160)}>
             สามข้อที่ผมยึดไว้ทุกครั้งที่เขียนหรือแบ่งปันความรู้
           </p>
           <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
-            {PRINCIPLES.map(({ no, title, body }) => (
-              <li key={no} className="border-t border-gold-line pt-6">
+            {PRINCIPLES.map(({ no, title, body }, i) => (
+              <li key={no} className="reveal line-grow border-t border-gold-line pt-6" style={d(i * 140)}>
                 <span className="font-display text-heading font-semibold text-gold">{no}</span>
                 <h3 className="mt-2 font-display text-subheading font-semibold text-deep">{title}</h3>
                 <p className="mt-2 text-body text-muted">{body}</p>
@@ -221,12 +228,12 @@ export default function Home() {
         {/* ศาสตร์ที่สนใจ */}
         <section id="topics" className="bg-mist py-20 md:py-28">
           <div className="mx-auto max-w-6xl px-5">
-            <p className="eyebrow">Focus Areas</p>
-            <h2 className="section-title mt-3">ศาสตร์ที่ผมสนใจ</h2>
+            <p className="eyebrow reveal">Focus Areas</p>
+            <h2 className="section-title reveal mt-3" style={d(80)}>ศาสตร์ที่ผมสนใจ</h2>
             <ul className="mt-12 grid gap-6 md:grid-cols-3">
-              {AREAS.map(({ icon: Icon, en, th, body, points }) => (
-                <li key={en} className="card flex flex-col">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-deep text-gold-soft">
+              {AREAS.map(({ icon: Icon, en, th, body, points }, i) => (
+                <li key={en} className="card lift reveal flex flex-col" style={d(i * 140)}>
+                  <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-deep text-gold-soft">
                     <Icon />
                   </span>
                   <p className="eyebrow mt-6">{en}</p>
@@ -248,16 +255,16 @@ export default function Home() {
 
         {/* เนื้อหาที่จะมีให้อ่าน */}
         <section id="content" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-          <p className="eyebrow">Journal</p>
-          <h2 className="section-title mt-3">บทความและความรู้</h2>
-          <p className="mt-4 max-w-2xl text-body text-muted">
+          <p className="eyebrow reveal">Journal</p>
+          <h2 className="section-title reveal mt-3" style={d(80)}>บทความและความรู้</h2>
+          <p className="reveal mt-4 max-w-2xl text-body text-muted" style={d(160)}>
             กำลังเตรียมเนื้อหาชุดแรก เร็ว ๆ นี้จะทยอยเผยแพร่ในรูปแบบเหล่านี้
           </p>
           <ul className="mt-12 grid gap-6 md:grid-cols-3">
-            {FORMATS.map(({ icon: Icon, title, body }) => (
-              <li key={title} className="card">
+            {FORMATS.map(({ icon: Icon, title, body }, i) => (
+              <li key={title} className="card lift reveal" style={d(i * 140)}>
                 <div className="flex items-center justify-between">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-mist text-deep">
+                  <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-mist text-deep">
                     <Icon />
                   </span>
                   <span className="rounded-full border border-gold-line px-3 py-1 text-label font-medium text-gold">
@@ -274,9 +281,9 @@ export default function Home() {
         {/* คำถามที่พบบ่อย */}
         <section id="faq" className="bg-mist py-20 md:py-28">
           <div className="mx-auto max-w-3xl px-5">
-            <p className="eyebrow">FAQ</p>
-            <h2 className="section-title mt-3">คำถามที่พบบ่อย</h2>
-            <div className="mt-10 divide-y divide-line rounded-3xl border border-line bg-paper">
+            <p className="eyebrow reveal">FAQ</p>
+            <h2 className="section-title reveal mt-3" style={d(80)}>คำถามที่พบบ่อย</h2>
+            <div className="reveal mt-10 divide-y divide-line rounded-3xl border border-line bg-paper" style={d(160)}>
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group">
                   <summary className="focus-ring flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 rounded-3xl px-6 py-4 text-body font-semibold text-deep [&::-webkit-details-marker]:hidden">
@@ -293,7 +300,7 @@ export default function Home() {
         {/* ติดต่อ */}
         <section id="contact" className="bg-deep py-20 text-ivory md:py-28">
           <div className="mx-auto grid max-w-6xl gap-12 px-5 md:grid-cols-[1fr_1.1fr] md:items-center">
-            <div>
+            <div className="reveal">
               <p className="eyebrow-light">Contact</p>
               <h2 className="mt-3 text-balance font-display text-heading font-semibold">
                 ติดต่อสอบถามหรือชวนทำงานร่วมกัน
@@ -308,10 +315,11 @@ export default function Home() {
             </div>
             <div className="grid gap-4">
               <a
+                style={d(100)}
                 href={lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus-ring-light flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 transition-colors hover:border-gold-soft"
+                className="focus-ring-light lift reveal flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 hover:border-gold-soft"
               >
                 <MessageIcon className="h-7 w-7 shrink-0 text-gold-soft" />
                 <span>
@@ -320,8 +328,9 @@ export default function Home() {
                 </span>
               </a>
               <a
+                style={d(240)}
                 href={telUrl}
-                className="focus-ring-light flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 transition-colors hover:border-gold-soft"
+                className="focus-ring-light lift reveal flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 hover:border-gold-soft"
               >
                 <PhoneIcon className="h-7 w-7 shrink-0 text-gold-soft" />
                 <span>
@@ -330,10 +339,11 @@ export default function Home() {
                 </span>
               </a>
               <a
+                style={d(380)}
                 href={CONTACT.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus-ring-light flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 transition-colors hover:border-gold-soft"
+                className="focus-ring-light lift reveal flex items-center gap-4 rounded-2xl border border-gold-soft/25 bg-deep-2 p-5 hover:border-gold-soft"
               >
                 <FacebookIcon className="h-7 w-7 shrink-0 text-gold-soft" />
                 <span>

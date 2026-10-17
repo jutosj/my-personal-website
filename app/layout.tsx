@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Noto_Serif_Thai } from "next/font/google";
+import { RevealObserver, ScrollProgress } from "./motion-client";
 import { SITE } from "./site-config";
 import "./globals.css";
 
@@ -42,7 +43,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="th" className={`${plex.variable} ${serifTh.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ScrollProgress />
+        <RevealObserver />
+        {children}
+      </body>
     </html>
   );
 }

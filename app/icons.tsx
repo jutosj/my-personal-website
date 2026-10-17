@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type IconProps = { className?: string };
 
@@ -21,32 +21,36 @@ function Svg({ className, children }: IconProps & { children: ReactNode }) {
 }
 
 /** โลโก้: วงแหวน + เกลียวคู่ (สื่อถึงการดูแลสุขภาพระดับเซลล์/ความยืนยาว) */
-export function LogoMark({ className }: IconProps) {
+export function LogoMark({ className, animate }: IconProps & { animate?: boolean }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 48"
       fill="none"
       aria-hidden="true"
-      className={className ?? "h-10 w-10"}
+      className={`${className ?? "h-10 w-10"}${animate ? " logo-draw" : ""}`}
     >
-      <circle cx="24" cy="24" r="22.25" stroke="currentColor" strokeWidth="1.5" />
+      <circle className="logo-line" pathLength={1} cx="24" cy="24" r="22.25" stroke="currentColor" strokeWidth="1.5" />
       <path
+        className="logo-line"
+        pathLength={1}
         d="M17 10C17 19 31 19 31 24C31 29 17 29 17 38"
         stroke="currentColor"
         strokeWidth="2.2"
         strokeLinecap="round"
       />
       <path
+        className="logo-line logo-line-2"
+        pathLength={1}
         d="M31 10C31 19 17 19 17 24C17 29 31 29 31 38"
         stroke="currentColor"
         strokeWidth="2.2"
         strokeLinecap="round"
       />
       <g stroke="var(--gold-line)" strokeWidth="1.8" strokeLinecap="round">
-        <path d="M19.4 14.4H28.6" />
-        <path d="M17.8 24H30.2" />
-        <path d="M19.4 33.6H28.6" />
+        <path className="logo-rung" style={{ "--r": "0s" } as CSSProperties} d="M19.4 14.4H28.6" />
+        <path className="logo-rung" style={{ "--r": "0.2s" } as CSSProperties} d="M17.8 24H30.2" />
+        <path className="logo-rung" style={{ "--r": "0.4s" } as CSSProperties} d="M19.4 33.6H28.6" />
       </g>
     </svg>
   );
