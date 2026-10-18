@@ -35,7 +35,7 @@ const MASCOT_TIPS = [
   "ดื่มน้ำสักแก้วหรือยังครับ?",
   "ลุกขึ้นยืดเส้นยืดสายกันหน่อย",
   "คืนนี้นอนให้พอนะครับ",
-  "ลองกดเกลียวข้าง ๆ ดูสิ 👀",
+  "วันนี้ยิ้มแล้วหรือยังครับ? 😊",
 ] as const;
 
 const CONTACT_TIPS = ["ทักมาได้เลยนะครับ", "นัดล่วงหน้าสะดวกที่สุด", "ยินดีให้ข้อมูลครับ", "แล้วเจอกันนะครับ"] as const;
@@ -174,35 +174,43 @@ export default function Home() {
 
       <main className="flex-1">
         {/* ส่วนหัว: ลายเส้นภูมิประเทศ + จุดเด่นกลางจอ */}
-        <section id="top" className="topo relative overflow-hidden pt-24 md:min-h-[100svh] md:pt-0">
+        <section id="top" className="topo relative overflow-hidden pt-24 lg:min-h-[100svh] lg:pt-0">
           <p
             aria-hidden="true"
-            className="outline-text pointer-events-none absolute inset-x-0 top-[12%] select-none text-center font-display text-mega font-semibold md:top-[16%]"
+            className="outline-text pointer-events-none absolute inset-x-0 top-[12%] select-none text-center font-display text-mega font-semibold lg:top-[16%]"
           >
             LONGEVITY
           </p>
 
-          <div
-            className="hero-in relative mx-auto aspect-square w-[min(88vw,560px)] md:absolute md:bottom-0 md:left-1/2 md:w-[min(50vw,720px)] md:-translate-x-1/2"
-            style={d(150)}
-          >
-            {PORTRAIT ? (
-              <>
-                <HelixCanvas className="helix absolute -inset-[8%] h-[116%] w-[116%] opacity-80" />
-                <Image src={`/${PORTRAIT}`} alt={`${SITE.fullName} (${SITE.name})`} fill priority sizes="(min-width: 768px) 50vw, 88vw" className="object-contain object-bottom" />
-              </>
-            ) : (
-              <>
-                <HelixCanvas className="helix absolute inset-0 h-full w-full" />
-                <span className="pointer-events-none absolute bottom-[18%] right-[8%] -rotate-[28deg] text-label font-semibold uppercase tracking-[0.16em] text-deep/70">
-                  อย่ากดเกลียวนี้นะ
-                </span>
-                <PokeBubble className="absolute left-[6%] top-[16%]" />
-              </>
-            )}
-          </div>
+          {PORTRAIT ? (
+            <div
+              className="hero-in relative mx-auto aspect-[3/4] w-[min(84vw,460px)] lg:absolute lg:bottom-0 lg:left-[57%] lg:h-[86svh] lg:w-auto lg:-translate-x-1/2"
+              style={d(150)}
+            >
+              <HelixCanvas className="helix absolute -left-[30%] -top-[6%] h-[100%] w-[160%] opacity-90" />
+              <Image
+                src={`/${PORTRAIT}`}
+                alt={`${SITE.fullName} (${SITE.name})`}
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 84vw"
+                className="pointer-events-none object-contain object-bottom drop-shadow-[0_30px_40px_rgba(14,59,58,0.18)]"
+              />
+            </div>
+          ) : (
+            <div
+              className="hero-in relative mx-auto aspect-square w-[min(88vw,560px)] lg:absolute lg:bottom-0 lg:left-1/2 lg:w-[min(50vw,720px)] lg:-translate-x-1/2"
+              style={d(150)}
+            >
+              <HelixCanvas className="helix absolute inset-0 h-full w-full" />
+              <span className="pointer-events-none absolute bottom-[18%] right-[8%] -rotate-[28deg] text-label font-semibold uppercase tracking-[0.16em] text-deep/70">
+                อย่ากดเกลียวนี้นะ
+              </span>
+              <PokeBubble className="absolute left-[6%] top-[16%]" />
+            </div>
+          )}
 
-          <div className="hero-in relative z-10 px-5 pb-10 pt-6 md:absolute md:bottom-10 md:left-8 md:max-w-sm md:p-0" style={d(450)}>
+          <div className="hero-in relative z-10 px-5 pb-10 pt-6 md:mx-auto md:max-w-xl md:text-center lg:absolute lg:bottom-10 lg:left-8 lg:mx-0 lg:max-w-sm lg:p-0 lg:text-left" style={d(450)}>
             <p className="eyebrow">{SITE.eyebrow}</p>
             <h1 className="mt-3 leading-none text-deep">
               <span className="block font-display text-display font-semibold italic">{SITE.name}</span>
@@ -226,12 +234,10 @@ export default function Home() {
             </a>
           </div>
 
-          {!PORTRAIT && (
-            <div className="hero-in relative hidden md:absolute md:bottom-10 md:right-8 md:block md:h-48 md:w-[22rem]" style={d(750)}>
-              <Mascot className="absolute bottom-0 left-0 w-36 cursor-pointer" />
-              <TipBubble dark tips={MASCOT_TIPS} className="absolute bottom-24 left-40 w-48" />
-            </div>
-          )}
+          <div className="hero-in relative hidden lg:absolute lg:bottom-10 lg:right-4 lg:block lg:h-48 lg:w-[19rem]" style={d(750)}>
+            <Mascot className="absolute bottom-0 left-0 w-36 cursor-pointer" />
+            <TipBubble dark tips={MASCOT_TIPS} className="absolute bottom-24 left-36 w-44" />
+          </div>
         </section>
 
         {/* ตัวอักษรยักษ์วิ่งสวนกัน + ภาพลอยกลาง */}
