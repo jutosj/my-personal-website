@@ -27,7 +27,7 @@ export function MenuButton({ items, ctaHref, ctaLabel }: { items: readonly Item[
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={`focus-ring relative z-[56] flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-xl border transition-colors ${
-          open ? "border-ivory/40 text-ivory" : "border-deep/25 bg-ivory/70 text-deep"
+          open ? "border-ivory/40 text-ivory" : "border-fg/25 bg-surface/70 text-fg"
         }`}
       >
         <span className={`block h-0.5 w-5 bg-current transition-transform duration-300 ${open ? "translate-y-1 rotate-45" : ""}`} />

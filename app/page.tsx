@@ -156,11 +156,11 @@ export default function Home() {
 
       <header id="site-header" className="site-header fixed inset-x-0 top-0 z-40">
         <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-3 md:px-8">
-          <a href="#top" className="focus-ring rounded leading-none text-deep">
+          <a href="#top" className="focus-ring rounded leading-none text-fg">
             <span className="block font-display text-subheading italic">Dr.</span>
             <span className="block text-subheading font-bold uppercase tracking-tight">Jutos</span>
           </a>
-          <a href="#top" aria-label="กลับด้านบน" className="focus-ring absolute left-1/2 hidden -translate-x-1/2 rounded-full text-deep md:block">
+          <a href="#top" aria-label="กลับด้านบน" className="focus-ring absolute left-1/2 hidden -translate-x-1/2 rounded-full text-fg md:block">
             <LogoMark className="h-9 w-9" />
           </a>
           <div className="flex items-center gap-2">
@@ -194,7 +194,7 @@ export default function Home() {
                 fill
                 priority
                 sizes="(min-width: 1024px) 40vw, 84vw"
-                className="pointer-events-none object-contain object-bottom drop-shadow-[0_30px_40px_rgba(14,59,58,0.18)]"
+                className="portrait-fade pointer-events-none object-contain object-bottom"
               />
             </div>
           ) : (
@@ -203,7 +203,7 @@ export default function Home() {
               style={d(150)}
             >
               <HelixCanvas className="helix absolute inset-0 h-full w-full" />
-              <span className="pointer-events-none absolute bottom-[18%] right-[8%] -rotate-[28deg] text-label font-semibold uppercase tracking-[0.16em] text-deep/70">
+              <span className="pointer-events-none absolute bottom-[18%] right-[8%] -rotate-[28deg] text-label font-semibold uppercase tracking-[0.16em] text-fg/70">
                 อย่ากดเกลียวนี้นะ
               </span>
               <PokeBubble className="absolute left-[6%] top-[16%]" />
@@ -212,31 +212,31 @@ export default function Home() {
 
           <div className="hero-in relative z-10 px-5 pb-10 pt-6 md:mx-auto md:max-w-xl md:text-center lg:absolute lg:bottom-10 lg:left-8 lg:mx-0 lg:max-w-sm lg:p-0 lg:text-left" style={d(450)}>
             <p className="eyebrow">{SITE.eyebrow}</p>
-            <h1 className="mt-3 leading-none text-deep">
+            <h1 className="mt-3 leading-none text-fg">
               <span className="block font-display text-display font-semibold italic">{SITE.name}</span>
               <span className="mt-3 block text-subheading font-bold uppercase tracking-tight">{SITE.fullName}</span>
             </h1>
-            <p className="mt-3 text-small text-muted">
+            <p className="mt-3 text-small text-fg-muted">
               แพทย์ด้านเวชศาสตร์ชะลอวัยและเวชศาสตร์ฟื้นฟู · {SITE.credentials}
             </p>
             <a
               href={CONTACT.tiktokUrl}
               {...ext}
-              className="focus-ring mt-6 inline-flex items-center gap-3 rounded-xl border border-deep/20 bg-ivory/80 p-3 pr-5 transition-colors hover:border-deep/50"
+              className="focus-ring mt-6 inline-flex items-center gap-3 rounded-xl border border-fg/20 bg-surface/80 p-3 pr-5 transition-colors hover:border-fg/50"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-fresh text-deep">
                 <TikTokIcon className="h-5 w-5" />
               </span>
               <span className="leading-tight">
-                <span className="block text-label font-semibold uppercase tracking-[0.18em] text-muted">ช่องของผม</span>
-                <span className="block text-small font-semibold text-deep">{CONTACT.tiktokHandle}</span>
+                <span className="block text-label font-semibold uppercase tracking-[0.18em] text-fg-muted">ช่องของผม</span>
+                <span className="block text-small font-semibold text-fg">{CONTACT.tiktokHandle}</span>
               </span>
             </a>
           </div>
 
           <div className="hero-in relative hidden lg:absolute lg:bottom-10 lg:right-4 lg:block lg:h-48 lg:w-[19rem]" style={d(750)}>
             <Mascot className="absolute bottom-0 left-0 w-36 cursor-pointer" />
-            <TipBubble dark tips={MASCOT_TIPS} className="absolute bottom-24 left-36 w-44" />
+            <TipBubble tips={MASCOT_TIPS} className="absolute bottom-24 left-36 w-44" />
           </div>
         </section>
 
@@ -267,13 +267,13 @@ export default function Home() {
         <section id="lifestyle" className="topo relative overflow-hidden px-5 py-20 md:h-[150vh] md:min-h-[1100px] md:px-0 md:py-0">
           <div className="reveal relative z-10 mx-auto max-w-md text-center md:absolute md:left-1/2 md:top-[36%] md:max-w-sm md:-translate-x-1/2 lg:max-w-md">
             <p className="eyebrow">Lifestyle Medicine</p>
-            <h2 className="mt-4 font-display text-heading font-semibold text-deep">
+            <h2 className="mt-4 font-display text-heading font-semibold text-fg">
               สุขภาพที่ดี <span className="hl px-1">สร้างได้</span> จากเรื่องเล็ก ๆ ในทุกวัน
             </h2>
-            <p className="mt-5 text-body text-muted">
+            <p className="mt-5 text-body text-fg-muted">
               โภชนาการ การนอน การเคลื่อนไหว ใจที่สงบ และความสัมพันธ์ที่ดี คือรากฐานของเวชศาสตร์วิถีชีวิต ที่ผมใช้ดูแลสุขภาพในทุกวัน
             </p>
-            <p className="sign mt-6 font-script text-display text-leaf-ink">หมอกิต</p>
+            <p className="sign mt-6 font-script text-display text-fresh">หมอกิต</p>
           </div>
 
           <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:mt-0">
@@ -285,7 +285,7 @@ export default function Home() {
                   </div>
                   <figcaption className="mt-2 flex flex-wrap items-center gap-2">
                     <span className="tag">{c.en}</span>
-                    <span className="text-label text-muted">{c.th}</span>
+                    <span className="text-label text-fg-muted">{c.th}</span>
                   </figcaption>
                 </Parallax>
               </figure>
@@ -294,7 +294,7 @@ export default function Home() {
         </section>
 
         {/* แนวคิดการทำงาน */}
-        <section id="approach" className="border-t border-line bg-ivory">
+        <section id="approach" className="border-t border-line bg-bg">
           <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow reveal">Approach</p>
             <h2 className="section-title reveal mt-3" style={d(80)}>
@@ -302,10 +302,10 @@ export default function Home() {
             </h2>
             <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
               {PRINCIPLES.map(({ no, title, body }, i) => (
-                <li key={no} className="reveal line-grow border-t border-deep pt-6" style={d(i * 140)}>
-                  <span className="font-display text-heading font-semibold italic text-leaf-ink">{no}</span>
-                  <h3 className="mt-2 font-display text-subheading font-semibold text-deep">{title}</h3>
-                  <p className="mt-2 text-body text-muted">{body}</p>
+                <li key={no} className="reveal line-grow border-t border-fg/40 pt-6" style={d(i * 140)}>
+                  <span className="font-display text-heading font-semibold italic text-fresh">{no}</span>
+                  <h3 className="mt-2 font-display text-subheading font-semibold text-fg">{title}</h3>
+                  <p className="mt-2 text-body text-fg-muted">{body}</p>
                 </li>
               ))}
             </ol>
@@ -313,7 +313,7 @@ export default function Home() {
         </section>
 
         {/* ความเชี่ยวชาญ */}
-        <section id="topics" className="bg-mist">
+        <section id="topics" className="bg-surface-2">
           <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
             <p className="eyebrow reveal">Specializations</p>
             <h2 className="section-title reveal mt-3" style={d(80)}>
@@ -331,46 +331,46 @@ export default function Home() {
           <h2 className="section-title reveal mt-3" style={d(80)}>
             {SITE.fullName}
           </h2>
-          <p className="reveal mt-2 text-subheading text-muted" style={d(140)}>
+          <p className="reveal mt-2 text-subheading text-fg-muted" style={d(140)}>
             {SITE.credentials}
           </p>
           <div className="mt-12 grid gap-12 md:grid-cols-[1.3fr_1fr] md:gap-16">
             <div>
-              <h3 className="reveal font-display text-subheading font-semibold text-deep">การศึกษาและวุฒิบัตร</h3>
+              <h3 className="reveal font-display text-subheading font-semibold text-fg">การศึกษาและวุฒิบัตร</h3>
               <ol className="tl-line reveal mt-6 space-y-8">
                 {EDUCATION.map(({ year, title, place }) => (
                   <li key={title} className="relative pl-8">
                     <span aria-hidden="true" className="absolute -left-[5px] top-2.5 h-2.5 w-2.5 rounded-full bg-fresh ring-4 ring-ivory" />
                     <p className="eyebrow">{year}</p>
-                    <p className="mt-1 font-semibold text-deep">{title}</p>
-                    <p className="text-small text-muted">{place}</p>
+                    <p className="mt-1 font-semibold text-fg">{title}</p>
+                    <p className="text-small text-fg-muted">{place}</p>
                   </li>
                 ))}
               </ol>
             </div>
             <div className="reveal card h-fit self-start" style={d(150)}>
-              <h3 className="font-display text-subheading font-semibold text-deep">การอบรมและสมาชิก</h3>
-              <ul className="mt-5 space-y-3 text-small text-ink">
+              <h3 className="font-display text-subheading font-semibold text-fg">การอบรมและสมาชิก</h3>
+              <ul className="mt-5 space-y-3 text-small text-fg">
                 {EXTRA.map((e) => (
                   <li key={e} className="flex gap-3">
-                    <ShieldCheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-leaf-ink" />
+                    <ShieldCheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-fresh" />
                     {e}
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 border-t border-line pt-4 text-label text-muted">ข้อมูลจากเว็บไซต์ทางการของ {CLINIC.name}</p>
+              <p className="mt-6 border-t border-line pt-4 text-label text-fg-muted">ข้อมูลจากเว็บไซต์ทางการของ {CLINIC.name}</p>
             </div>
           </div>
         </section>
 
         {/* คลินิก */}
-        <section id="clinic" className="bg-mist py-20 md:py-28">
+        <section id="clinic" className="bg-surface-2 py-20 md:py-28">
           <div className="mx-auto max-w-6xl px-5">
             <div className="reveal card grid gap-10 md:grid-cols-[1.2fr_1fr] md:p-12">
               <div>
                 <p className="eyebrow">My Clinic</p>
                 <h2 className="section-title mt-3">{CLINIC.name}</h2>
-                <p className="mt-4 text-body text-muted">
+                <p className="mt-4 text-body text-fg-muted">
                   ศูนย์สุขภาพที่เน้นเวชศาสตร์ป้องกันและเวชศาสตร์วิถีชีวิต ออกแบบการดูแลให้เหมาะกับแต่ละคน โดยมองหาต้นเหตุของปัญหาสุขภาพ
                   ไม่ใช่แค่บรรเทาอาการ
                 </p>
@@ -388,12 +388,12 @@ export default function Home() {
                 <p className="eyebrow">โปรแกรมของคลินิก</p>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {CLINIC.programs.map((p) => (
-                    <li key={p} className="rounded-full border border-line bg-ivory px-4 py-1.5 text-small text-deep">
+                    <li key={p} className="rounded-full border border-line bg-bg px-4 py-1.5 text-small text-fg">
                       {p}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-label text-muted">ความเหมาะสมของแต่ละโปรแกรมขึ้นอยู่กับการประเมินโดยแพทย์</p>
+                <p className="mt-4 text-label text-fg-muted">ความเหมาะสมของแต่ละโปรแกรมขึ้นอยู่กับการประเมินโดยแพทย์</p>
               </div>
             </div>
           </div>
@@ -405,20 +405,20 @@ export default function Home() {
           <h2 className="section-title reveal mt-3" style={d(80)}>
             บทความและความรู้
           </h2>
-          <p className="reveal mt-4 max-w-2xl text-body text-muted" style={d(160)}>
+          <p className="reveal mt-4 max-w-2xl text-body text-fg-muted" style={d(160)}>
             กำลังเตรียมเนื้อหาชุดแรก เร็ว ๆ นี้จะทยอยเผยแพร่ในรูปแบบเหล่านี้
           </p>
           <ul className="mt-12 grid gap-6 md:grid-cols-3">
             {FORMATS.map(({ icon: Icon, title, body }, i) => (
               <li key={title} className="card lift reveal" style={d(i * 140)}>
                 <div className="flex items-center justify-between">
-                  <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-mist text-deep">
+                  <span className="lift-icon flex h-12 w-12 items-center justify-center rounded-full bg-surface-2 text-fg">
                     <Icon />
                   </span>
                   <span className="tag">เร็ว ๆ นี้</span>
                 </div>
-                <h3 className="mt-5 font-display text-subheading font-semibold text-deep">{title}</h3>
-                <p className="mt-2 text-body text-muted">{body}</p>
+                <h3 className="mt-5 font-display text-subheading font-semibold text-fg">{title}</h3>
+                <p className="mt-2 text-body text-fg-muted">{body}</p>
               </li>
             ))}
           </ul>
@@ -444,7 +444,7 @@ export default function Home() {
         </section>
 
         {/* คำถามที่พบบ่อย */}
-        <section id="faq" className="bg-mist py-20 md:py-28">
+        <section id="faq" className="bg-surface-2 py-20 md:py-28">
           <div className="mx-auto max-w-3xl px-5">
             <p className="eyebrow reveal">FAQ</p>
             <h2 className="section-title reveal mt-3" style={d(80)}>
@@ -453,13 +453,13 @@ export default function Home() {
             <div className="reveal mt-10 divide-y divide-line border-y border-line" style={d(160)}>
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group">
-                  <summary className="focus-ring flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-5 text-subheading font-medium text-deep [&::-webkit-details-marker]:hidden">
+                  <summary className="focus-ring flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-5 text-subheading font-medium text-fg [&::-webkit-details-marker]:hidden">
                     {q}
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line transition-colors group-open:bg-fresh">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line transition-colors group-open:bg-fresh group-open:text-deep group-open:border-fresh">
                       <ChevronDownIcon className="h-4 w-4 transition-transform group-open:rotate-180" />
                     </span>
                   </summary>
-                  <p className="pb-6 pr-12 text-body text-muted">{a}</p>
+                  <p className="pb-6 pr-12 text-body text-fg-muted">{a}</p>
                 </details>
               ))}
             </div>
